@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>websocket test</title>
+</head>
+
+<body>
+    <h1>打开浏览器直接测试页面,看websocket运行  tetris目录有简易的热血俄罗斯方块基于websocket的</h1>
+    <table>
+        <tr>
+            <td>输入内容：</td>
+            <td><input type="text" id="sendTxt"/></td>
+        </tr>
+        <tr>
+            <td><input type="button" value="提交" id="but"></td>
+        </tr>
+        <tr>
+            <td>显示内容</td>
+            <td><div id="showTxt"></div></td>
+        </tr>
+    </table>
+</body>
+<script>
+    let websocket=new WebSocket("ws://echo.websocket.org/")
+    websocket.onopen=function(){ //建立连接
+        console.log('websocket open')
+        document.getElementById("showTxt").innerHTML='connected'
+    }
+    websocket.onclose=function(){  //关闭连接
+        console.log('websocket close')
+    }
+    websocket.onmessage=function(e){  //接受数据
+        console.log(e.data)
+        document.getElementById("showTxt").innerHTML=e.data
+    }
+    document.getElementById("but").onclick=function(){
+        let txt=document.getElementById('sendTxt').value;
+        websocket.send(txt)  //发送数据
+    }
+</script>
+
+</html>
