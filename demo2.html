@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>websocket demo</title>
+</head>
+
+<body>
+    <h1>websocekt demo</h1>
+    <table>
+        <tr>
+            <td>输入内容：</td>
+            <td><input type="text" id="sendTxt" /></td>
+        </tr>
+        <tr>
+            <td><input type="button" value="提交" id="but"></td>
+        </tr>
+        <tr>
+            <td>显示内容</td>
+            <td>
+                <div id="showTxt"></div>
+            </td>
+        </tr>
+    </table>
+</body>
+<script>
+    // 打开一个WebSocket:
+    var ws = new WebSocket('ws://localhost:3000');
+    // 打开WebSocket连接后立刻发送一条消息:
+    ws.onopen = function(){
+		ws.send("client 已经连接");
+	};
+	ws.onmessage = function(message){
+        console.log(message)
+        document.getElementById("showTxt").innerHTML = message.data
+	};
+	ws.onclose = function(ev){
+        ws.send('client close')
+		console.log('client close')
+	};
+	ws.onerror = function(ev){
+        console.log('err')
+		console.log(ev);
+	};
+    document.getElementById("but").onclick = function () {
+        let txt = document.getElementById('sendTxt').value;
+        ws.send(txt)  //发送数据
+    }
+
+</script>
+
+</html>

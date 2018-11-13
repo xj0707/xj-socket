@@ -25,7 +25,7 @@
     </table>
 </body>
 <script>
-    let websocket=new WebSocket("ws://echo.websocket.org/")
+    let websocket=new WebSocket("ws://echo.websocket.org/")  //这个是weibsocket提供的服务器地址，后面我们用nodejs搭建自己的服务器
     websocket.onopen=function(){ //建立连接
         console.log('websocket open')
         document.getElementById("showTxt").innerHTML='connected'
